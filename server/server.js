@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("api/products", productRoutes);
+app.use("/api/products", productRoutes);
 
 const PORT = process.env.PORT;
 const URI = process.env.MONGO_URI;
