@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
   {
@@ -30,7 +30,6 @@ const productSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = mongoose.model("Product", productSchema)
-
+module.exports = mongoose.model("Product", productSchema);
 
 // handle favorites

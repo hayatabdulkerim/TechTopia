@@ -55,7 +55,7 @@ const createProduct = async (req, res) => {
       .json({ error: "Please fill in all the fields", emptyFields });
   }
   try {
-    const product = await Producr.create({
+    const product = await Product.create({
       name,
       category,
       description,
@@ -63,7 +63,7 @@ const createProduct = async (req, res) => {
       imageLink,
     });
     res.status(200).json(product);
-  } catch {
+  } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
@@ -79,7 +79,7 @@ const deleteProduct = async (req, res) => {
     return res.status(404).json({ error: "Invalid id" });
   }
 
-  const product = await Product.findOneAndDelete(id);
+  const product = await Product.findByIdAndDelete(id);
 
   if (!product) {
     return res.status(404).json({ error: "No such product" });

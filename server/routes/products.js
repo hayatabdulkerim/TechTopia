@@ -15,6 +15,6 @@ router.get("/", getProducts);
 router.get("/:id", getProduct);
 router.post("/", createProduct);
 router.delete("/:id", deleteProduct);
-router.patch("/", updateProduct);
+router.patch("/:id", updateProduct);
 
 module.exports = router;
