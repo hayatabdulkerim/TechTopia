@@ -14,7 +14,7 @@ export const productsReducer = (state, action) => {
       };
     case "DELETE_PRODUCT":
       return {
-        products: state.products.filter((p) => p.id != action.payload._id),
+        products: state.products.filter((p) => p._id != action.payload._id),
       };
     default:
       return state;
@@ -22,7 +22,7 @@ export const productsReducer = (state, action) => {
 };
 
 export const ProductsContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(productsReducer, { products: null });
+  const [state, dispatch] = useReducer(productsReducer, { products: [] }); // if we make this null to begin with the form will disapear 
   return (
     <ProductsContext.Provider value={{ ...state, dispatch }}>
       {children}

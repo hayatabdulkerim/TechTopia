@@ -35,19 +35,19 @@ const createProduct = async (req, res) => {
   let emptyFields = [];
 
   if (!name) {
-    emptyFields.push(name);
+    emptyFields.push("name");
   }
   if (!category) {
-    emptyFields.push(category);
+    emptyFields.push("category");
   }
   if (!description) {
-    emptyFields.push(description);
+    emptyFields.push("description");
   }
   if (!price) {
-    emptyFields.push(price);
+    emptyFields.push("price");
   }
   if (!imageLink) {
-    emptyFields.push(imageLink);
+    emptyFields.push("imageLink");
   }
   if (emptyFields.length > 0) {
     return res
