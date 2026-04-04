@@ -21,22 +21,22 @@ export default function Navbar() {
         {/*  Tabs (Categories) */}
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <Link className="nav-link" to="/category/Headsets">
-              Headsets
+            <Link className="nav-link" to="/category/headphones">
+              Headphones
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/category/Earbuds">
+            <Link className="nav-link" to="/category/earbuds">
               Earbuds
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/category/Smart Glasses">
+            <Link className="nav-link" to="/category/smart glasses">
               Smart Glasses
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/category/Accessories">
+            <Link className="nav-link" to="/category/accessories">
               Accessories
             </Link>
           </li>

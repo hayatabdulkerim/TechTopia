@@ -9,6 +9,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import CategoryPage from "./pages/CategoryPage";
+import ProductForm from "./components/ProductForm"
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/category/:name" element={<CategoryPage />} />
-            {/* <Route path="/login" element={<Login />} /> */}
+            <Route path="/login" element={<ProductForm />} />
             {/* <Route path="/signup" element={<Signup />} /> */}
           </Routes>
         </div>
