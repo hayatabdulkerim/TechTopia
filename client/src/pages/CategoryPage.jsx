@@ -52,12 +52,15 @@ export default function CategoryPage() {
       </nav>
 
       <div className="row">
-        {match &&
+        {match.length > 0 ? (
           match.map((product) => (
             <div className="col-md-4" key={product._id}>
               <ProductDetail product={product} />
             </div>
-          ))}
+          ))
+        ) : (
+          <h3 className="text-center mt-4">No products with this name</h3>
+        )}
       </div>
     </div>
   );
