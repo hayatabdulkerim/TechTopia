@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ProductDetail from "../components/ProductDetail";
 import { useProductsContext } from "../hooks/useProductsContext";
 
 export default function CategoryPage() {
-    const { name } = useParams();
+  const { name } = useParams();
+  const [searchText, setSearchText] = useState("");
   const { products, dispatch } = useProductsContext();
+
   useEffect(() => {
     const fetchProducts = async () => {
       // for us to be able to use async
@@ -24,11 +26,34 @@ export default function CategoryPage() {
     ? products.filter((p) => p.category === name)
     : [];
 
+  const match = filteredProducts.filter((p) =>
+    p.name.toLowerCase().includes(searchText.toLowerCase()),
+  );
+
   return (
     <div className="container mt-4">
+      <nav className="navbar bg-body-tertiary">
+        <div className="container-fluid justify-content-center">
+          <form
+            className="d-flex"
+            role="search"
+            style={{ width: "500px", maxWidth: "90%" }}
+          >
+            <input
+              type="search"
+              className="form-control"
+              placeholder="Search name of a product"
+              aria-label="Search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </form>
+        </div>
+      </nav>
+
       <div className="row">
-        {filteredProducts &&
-          filteredProducts.map((product) => (
+        {match &&
+          match.map((product) => (
             <div className="col-md-4" key={product._id}>
               <ProductDetail product={product} />
             </div>
