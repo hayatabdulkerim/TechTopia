@@ -1,12 +1,11 @@
 
-div.error {
-    padding: 10px;
-    background: #ffefef;
-    border: 1px solid var(--error);
-    color: var(--error);
-    border-radius: 4px;
-    margin: 20px 0;
+.error{
+  border: 2px solid rgb(229, 140, 140);
+  background-color: #f3e7e7; /* optional light red background */
 }
-input.error {
-  border: 1px solid var(--error);
+
+.error-message {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
 }
