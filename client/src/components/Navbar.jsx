@@ -1,11 +1,15 @@
-import { Link } from "react-router-dom";
+
+import { NavLink } from "react-router-dom"; // to have an active state on the currently selected tab
 
 export default function Navbar() {
+  const navClass = ({ isActive }) =>
+    "nav-link" + (isActive ? " active fw-bold text-info" : "");
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-      <Link className="navbar-brand fw-bold" to="/">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 fixed-top">
+      <NavLink className="navbar-brand fw-bold" to="/">
         TechTopia
-      </Link>
+      </NavLink>
 
       {/* Toggle (for mobile) */}
       <button
@@ -18,38 +22,38 @@ export default function Navbar() {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarContent">
-        {/*  Tabs (Categories) */}
+        {/* Tabs (Categories) */}
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-          <li className="nav-item">
-            <Link className="nav-link" to="/category/headphones">
+          <li className="nav-item ">
+            <NavLink to="/category/headphones" className={navClass}>
               Headphones
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/category/earbuds">
+            <NavLink to="/category/earbuds" className={navClass}>
               Earbuds
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/category/smart glasses">
+            <NavLink to="/category/smart-glasses" className={navClass}>
               Smart Glasses
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/category/accessories">
+            <NavLink to="/category/accessories" className={navClass}>
               Accessories
-            </Link>
+            </NavLink>
           </li>
         </ul>
 
-        {/*  Auth Buttons */}
+        {/* Auth Buttons */}
         <div className="d-flex gap-2">
-          <Link to="/login" className="btn btn-outline-light">
+          <NavLink to="/login" className="btn btn-outline-light">
             Login
-          </Link>
-          <Link to="/signup" className="btn btn-outline-light fw-bold">
+          </NavLink>
+          <NavLink to="/signup" className="btn btn-outline-light fw-bold">
             Sign Up
-          </Link>
+          </NavLink>
         </div>
       </div>
     </nav>

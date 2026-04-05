@@ -28,7 +28,7 @@ export default function ProductForm() {
     const json = await response.json();
 
     if (!response.ok) {
-      setError(json.error);
+      setError(json.error); // if there is an error in creating a product like an empty field the controller will return the error message we gave it and also the emptyFields array
       setEmptyFields(json.emptyFields);
     } else {
       setError(null);
