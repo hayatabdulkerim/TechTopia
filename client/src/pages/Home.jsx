@@ -3,7 +3,7 @@ import React from "react";
 // Banner component
 function Banner() {
   return (
-    <div className="bg-primary text-white text-center py-5">
+    <div className="bg-primary text-white text-center py-5 mt-5">
       <h1 className="display-4">Welcome to TechTopia</h1>
       <p className="lead">Your one-stop shop for the latest tech gadgets</p>
       <a href="#categories" className="btn btn-light btn-lg mt-3">
