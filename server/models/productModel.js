@@ -24,7 +24,7 @@ const productSchema = new Schema(
     imageLink: {
       type: String,
       required: true,
-      match: [/^https?:\/\/.+/, "Please use a valid URL"], //This is Mongoose validation using a Regular Expression (Regex).
+      //  match: [/^https?:\/\/.+/, "Please use a valid URL"], //This is Mongoose validation using a Regular Expression (Regex).
     },
   },
   { timestamps: true },
