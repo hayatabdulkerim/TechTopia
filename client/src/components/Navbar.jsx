@@ -77,7 +77,7 @@
 import { NavLink } from "react-router-dom"; // to have an active state on the currently selected tab
 import { useCartContext } from "../hooks/useCartContext";
 import { useState } from "react";
-import Cart from "./Cart"; // import your Cart component
+import Cart from "./Cart"; 
 
 export default function Navbar() {
   const { cartItems } = useCartContext();

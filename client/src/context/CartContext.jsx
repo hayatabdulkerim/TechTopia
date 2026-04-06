@@ -4,11 +4,11 @@ export const CartContext = createContext();
 
 export const cartReducer = (state, action) => {
   switch (action.type) {
-    case "SET_CART_ITEMS":
+    case "SET_CART_ITEMS":  // load all the cart items
       return {
         cartItems: action.payload,
       };
-    case "ADD_CART_ITEM":
+    case "ADD_CART_ITEM":  // called when we click add cart item
       const existing = state.cartItems.find(
         (item) => item._id === action.payload._id,
       );
@@ -32,11 +32,13 @@ export const cartReducer = (state, action) => {
               ? { ...item, quantity: item.quantity - 1 }
               : item,
           )
-          .filter((item) => item.quantity > 0), // to avoid decreasing into a negative value
+          .filter((item) => item.quantity > 0), // to avoid decreasing into a negative value and just removing the ones whose quantity reached 0.
       };
     case "DELETE_CART_ITEM":
       return {
-        cartItems: state.cartItems.filter((item) => item._id !== action.payload._id),
+        cartItems: state.cartItems.filter(
+          (item) => item._id !== action.payload._id,
+        ),
       };
     default:
       return state;
