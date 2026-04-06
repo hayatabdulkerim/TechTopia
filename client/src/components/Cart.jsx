@@ -53,7 +53,10 @@ export default function Cart({ onClose }) {
             <strong>${subtotal}</strong>
           </div>
 
-          <button className="btn btn-primary w-100 mb-2 rounded-pill">
+          <button
+            className="btn btn-primary w-100 mb-2 rounded-pill "
+            disabled={cartItems.length === 0}
+          >
             Checkout
           </button>
         </div>
