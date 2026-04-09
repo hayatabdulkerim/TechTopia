@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const productRoutes = require("./routes/products");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
@@ -15,7 +16,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// routes
 app.use("/api/products", productRoutes);
+const userRoutes = require("./routes/user");
 
 const PORT = process.env.PORT;
 const URI = process.env.MONGO_URI;
