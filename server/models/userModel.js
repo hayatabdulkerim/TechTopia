@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const bycript = require('bycript')
+const bcrypt = require('bcrypt')
 const validator = require('validator')
 
 const Schema = mongoose.Schema

@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/products", productRoutes);
-const userRoutes = require("./routes/user");
+app.use('/api/user' , userRoutes)
 
 const PORT = process.env.PORT;
 const URI = process.env.MONGO_URI;
