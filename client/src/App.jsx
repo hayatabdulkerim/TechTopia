@@ -7,6 +7,8 @@ import "./App.css";
 
 // Importing pages and components
 import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
 import ProductForm from "./components/ProductForm"
@@ -14,15 +16,16 @@ import ProductForm from "./components/ProductForm"
 
 function App() {
   return (
-      <BrowserRouter> 
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/category/:name" element={<CategoryPage />} />
-            <Route path="/login" element={<ProductForm />} />
-            {/* <Route path="/signup" element={<Signup />} /> */}
-          </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/category/:name" element={<CategoryPage />} />
+        {/* <Route path="/login" element={<ProductForm />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 export default App;
