@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/user");
+const cartRoutes = require("./routes/carts");
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/products", productRoutes);
-app.use('/api/user' , userRoutes)
+app.use("/api/user", userRoutes);
+app.use("/api/cart", cartRoutes); // making the cart routes avaliable
 
 const PORT = process.env.PORT;
 const URI = process.env.MONGO_URI;

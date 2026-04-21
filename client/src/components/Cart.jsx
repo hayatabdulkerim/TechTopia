@@ -7,10 +7,14 @@ export default function Cart({ onClose }) {
   // <-- receive onClose from Navbar
   const { cartItems } = useCartContext();
 
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
+  // const subtotal = cartItems.reduce(
+  //   (total, item) => total + item.price * item.quantity,
+  //   0,
+  // );
+const subtotal = cartItems.reduce(
+  (total, item) => total + (item.productId?.price || 0) * item.quantity,
+  0,
+);
 
   return (
     // Use a div with Bootstrap classes but React-controlled
