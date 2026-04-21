@@ -117,17 +117,17 @@ export default function Navbar() {
   const navClass = ({ isActive }) =>
     "nav-link" + (isActive ? " active fw-bold text-info" : "");
 
-  // -----------------------
+
   // SAFE CART COUNT
-  // -----------------------
+  
   const cartCount = (cartItems ?? []).reduce(
     (total, item) => total + (item.quantity || 0),
     0,
   );
 
-  // -----------------------
+
   // LOGOUT HANDLER
-  // -----------------------
+
   const handleClick = async () => {
     await logout();
   };

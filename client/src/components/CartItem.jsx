@@ -47,9 +47,8 @@ export default function CartItem({ cartItem }) {
   const { fetchCart } = useCartContext();
   const { user } = useAuthContext();
 
-  // ------------------------
   // DELETE ITEM
-  // ------------------------
+
   const handleDelete = async () => {
     try {
       await fetch(`http://localhost:4000/api/cart/${cartItem._id}`, {
@@ -65,9 +64,9 @@ export default function CartItem({ cartItem }) {
     }
   };
 
-  // ------------------------
+  
   // DECREMENT ITEM
-  // ------------------------
+ 
   const handleDecrement = async () => {
     try {
       await fetch(`http://localhost:4000/api/cart/${cartItem._id}`, {

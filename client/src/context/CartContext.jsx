@@ -105,13 +105,13 @@ export const CartContextProvider = ({ children }) => {
   // FETCH CART FROM BACKEND
 
   const fetchCart = async () => {
-    console.log("CART DATA:");
+    
     if (!user) return;
 
     try {
       const res = await fetch("http://localhost:4000/api/cart", {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.token}`, // this token has the id inside it that way we can identify the cart items that belong to this user
         },
       });
 
