@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar";
 import ProductForm from './components/ProductForm'
 import Dashboard from './pages/admin/Dashboard'
 import Products from './pages/admin/Products'
+import Users from './pages/admin/Users'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/Products" element={<Products />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </BrowserRouter>
   );

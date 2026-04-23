@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProductsContext } from "../../hooks/useProductsContext";
+import {useUserContext} from '../../hooks/useUserContext'
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const AdminLayout = () => {
@@ -9,11 +10,10 @@ const AdminLayout = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-
-
   // products 
 
   const {products} = useProductsContext();
+  const {users} = useUserContext()
 
   return (
     <div className="d-flex topmar">
@@ -44,7 +44,7 @@ const AdminLayout = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a href="#" className="nav-link text-white">
+            <a href="/users" className="nav-link text-white">
               Users
             </a>
           </li>
@@ -68,7 +68,6 @@ const AdminLayout = () => {
 
         {/* Page Content */}
         <div className="p-4">
-
           <div className="container mt-4">
             <div className="row">
               <div className="col-md-4">
@@ -77,6 +76,20 @@ const AdminLayout = () => {
                     <div>
                       <h6 className="text-muted mb-1">Total Products</h6>
                       <h3 className="mb-0">{products?.length || 0}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="container mt-4">
+            <div className="row">
+              <div className="col-md-4">
+                <div className="card shadow-sm border-0">
+                  <div className="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                      <h6 className="text-muted mb-1">Total Users</h6>
+                      <h3 className="mb-0">{users?.length || 0}</h3>
                     </div>
                   </div>
                 </div>

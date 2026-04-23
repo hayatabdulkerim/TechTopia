@@ -4,23 +4,56 @@ const validator = require('validator')
 
 const Schema = mongoose.Schema
 
-const userSchema = new Schema({
-    email:{
-        type: String, 
-        required: true, 
-        unique: true,
+const userSchema = new Schema(
+  {
+    first_name: {
+      type: String,
+      required: true,
+      trim: true, // to trim user input
     },
-    password:{
-        type: String, 
-        required: true,
-    }
-})
+    last_name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true, // now the same email with different cases will be treated the same way
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true },
+);
 
-userSchema.statics.signup = async function(email, password) {  // arrow functions do not allow the use of the "this" keyword so we have to use a normal function
+userSchema.set("toJSON", {
+  virtuals: true,
+  transform: function (doc, ret) {
+    delete ret.password;
+    return ret;
+  },
+});
+
+userSchema.virtual("fullName").get(function () {
+  return `${this.first_name} ${this.last_name}`;
+});
+
+
+
+
+userSchema.statics.signup = async function(first_name, last_name, email, password) {  // arrow functions do not allow the use of the "this" keyword so we have to use a normal function
   
   // validation
 
-  if (!email || !password){
+  if (!email || !password || !first_name || !last_name ){
     throw Error('All fields must be filled')
   }
 
@@ -39,7 +72,7 @@ userSchema.statics.signup = async function(email, password) {  // arrow function
   const salt = await bcrypt.genSalt(10)   // this generates the string that is hashed with the password that generates different passwords even if two users used the same password which prevents hackers from password matching 
   const hash = await bcrypt.hash(password, salt)   // takes the password and the salt and generates a unique string
 
-  const user = await this.create({email, password: hash})  // this creates a document in the db with the email and the hashed password
+  const user = await this.create({first_name, last_name, email, password: hash})  // this creates a document in the db with the email and the hashed password
 
   return user   // returning the user so that we can use it in the controller function
 }
@@ -64,7 +97,7 @@ userSchema.statics.login = async function(email, password){
     throw Error('Incorrect password')
   }
 
-  return user
+  return user  
 }
 
 
