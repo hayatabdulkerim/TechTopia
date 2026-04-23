@@ -1,5 +1,3 @@
-
-
 import CartItem from "./CartItem";
 import { useCartContext } from "../hooks/useCartContext";
 

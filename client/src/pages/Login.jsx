@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 
+
 export default function Login() {
+
+// const [showPassword, setShowPassword] = useState(false); // for password
+
+
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
@@ -43,6 +50,34 @@ export default function Login() {
                   value={password}
                 />
               </div>
+
+
+              {/* <div className="mb-3 position-relative">
+                <label className="form-label">Password</label>
+
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="form-control rounded-3 pe-5"
+                  placeholder="Enter your password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                />
+
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: "absolute",
+                    right: "15px",
+                    top: "38px",
+                    cursor: "pointer",
+                  }}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </span>
+              </div> */}
+
+
+
 
               {/* Button */}
               <button
