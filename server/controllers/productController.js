@@ -28,7 +28,7 @@ const getProduct = async (req, res) => {
 // create a product
 
 const createProduct = async (req, res) => {
-  const { name, category, description, price, imageLink } = req.body;
+  const { name, category, description, price, stock, imageLink } = req.body;
 
   // handling empty fields
 
@@ -46,6 +46,9 @@ const createProduct = async (req, res) => {
   if (!price) {
     emptyFields.push("price");
   }
+  if (!stock) {
+    emptyFields.push("stock");
+  }
   if (!imageLink) {
     emptyFields.push("imageLink");
   }
@@ -60,6 +63,7 @@ const createProduct = async (req, res) => {
       category,
       description,
       price,
+      stock,
       imageLink,
     });
     res.status(200).json(product);

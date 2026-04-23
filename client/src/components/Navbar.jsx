@@ -174,6 +174,12 @@ export default function Navbar() {
                 Accessories
               </NavLink>
             </li>
+
+            <li className="nav-item">
+              <NavLink to="/dashboard" className={navClass}>
+                Dashboard
+              </NavLink>
+            </li>
           </ul>
 
           {/* CART BUTTON */}

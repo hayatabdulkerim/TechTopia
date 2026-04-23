@@ -11,7 +11,9 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import CategoryPage from "./pages/CategoryPage";
 import Navbar from "./components/Navbar";
-import ProductForm from "./components/ProductForm"
+import ProductForm from './components/ProductForm'
+import Dashboard from './pages/admin/Dashboard'
+import Products from './pages/admin/Products'
 
 
 function App() {
@@ -21,9 +23,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/category/:name" element={<CategoryPage />} />
-        {/* <Route path="/login" element={<ProductForm />} /> */}
+        <Route path="/add_product" element={<ProductForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/Products" element={<Products />} />
       </Routes>
     </BrowserRouter>
   );

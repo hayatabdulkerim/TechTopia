@@ -4,18 +4,27 @@ import { useProductsContext } from "../hooks/useProductsContext";
 export default function ProductForm() {
   const { dispatch } = useProductsContext();
 
-  const [name, setname] = useState("");
-  const [category, setcategory] = useState("");
-  const [description, setdescription] = useState("");
-  const [price, setprice] = useState("");
-  const [imageLink, setimageLink] = useState("");
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [imageLink, setImageLink] = useState("");
+  const [stock, setStock] = useState("");
+
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const product = { name, category, description, price, imageLink };
+    const product = {
+      name,
+      category,
+      description,
+      price,
+      stock,
+      imageLink,
+    };
 
     const response = await fetch("http://localhost:4000/api/products", {
       method: "POST",
@@ -28,98 +37,116 @@ export default function ProductForm() {
     const json = await response.json();
 
     if (!response.ok) {
-      setError(json.error); // if there is an error in creating a product like an empty field the controller will return the error message we gave it and also the emptyFields array
-      setEmptyFields(json.emptyFields);
+      setError(json.error);
+      setEmptyFields(json.emptyFields || []);
     } else {
       setError(null);
       setEmptyFields([]);
-      setname("");
-      setcategory("");
-      setdescription("");
-      setprice("");
-      setimageLink("");
 
-      console.log("new product added", json);
+      setName("");
+      setCategory("");
+      setDescription("");
+      setPrice("");
+      setStock("");
+      setImageLink("");
+
+      
+
       dispatch({ type: "CREATE_PRODUCT", payload: json });
     }
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container topmar">
       <h1 className="mb-4">Add a Product</h1>
+
       <form
         onSubmit={handleSubmit}
         className="card p-4 shadow-sm bg-light rounded"
       >
+        {/* Name */}
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Product Name
-          </label>
+          <label className="form-label">Product Name</label>
           <input
-            id="name"
             type="text"
-            className={`form-control ${emptyFields.includes("name") ? "error" : ""}`}
+            className={`form-control ${
+              emptyFields.includes("name") ? "error" : ""
+            }`}
             value={name}
-            onChange={(e) => setname(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
 
+        {/* Category */}
         <div className="mb-3">
-          <label htmlFor="category" className="form-label">
-            Category
-          </label>
+          <label className="form-label">Category</label>
           <select
-            id="category"
-            className={`form-control ${emptyFields.includes("category") ? "error" : ""}`}
+            className={`form-control ${
+              emptyFields.includes("category") ? "error" : ""
+            }`}
             value={category}
-            onChange={(e) => setcategory(e.target.value)}
+            onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="">Select a category</option>{" "}
+            <option value="">Select a category</option>
             <option value="headphones">Headphones</option>
             <option value="earbuds">Earbuds</option>
-            <option value="smart glasses">Smart Glasses</option>
+            <option value="smart-glasses">Smart Glasses</option>
             <option value="accessories">Accessories</option>
           </select>
         </div>
 
+        {/* Description */}
         <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
+          <label className="form-label">Description</label>
           <textarea
-            id="description"
-            className={`form-control ${emptyFields.includes("description") ? "error" : ""}`}
+            className={`form-control ${
+              emptyFields.includes("description") ? "error" : ""
+            }`}
             value={description}
-            onChange={(e) => setdescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
+        {/* Price */}
         <div className="mb-3">
-          <label htmlFor="price" className="form-label">
-            Price
-          </label>
+          <label className="form-label">Price</label>
           <input
-            id="price"
             type="number"
-            className={`form-control ${emptyFields.includes("price") ? "error" : ""}`}
+            className={`form-control ${
+              emptyFields.includes("price") ? "error" : ""
+            }`}
             value={price}
-            onChange={(e) => setprice(e.target.value)}
+            onChange={(e) => setPrice(e.target.value)}
           />
         </div>
 
+        {/* Stock */}
         <div className="mb-3">
-          <label htmlFor="imageLink" className="form-label">
-            Image Link
-          </label>
+          <label className="form-label">Stock</label>
           <input
-            id="imageLink"
-            type="text"
-            className={`form-control ${emptyFields.includes("imageLink") ? "error" : ""}`}
-            value={imageLink}
-            onChange={(e) => setimageLink(e.target.value)}
+            type="number"
+            className={`form-control ${
+              emptyFields.includes("stock") ? "error" : ""
+            }`}
+            value={stock}
+            onChange={(e) => setStock(e.target.value)}
           />
         </div>
 
+        {/* Image */}
+        <div className="mb-3">
+          <label className="form-label">Image Link</label>
+          <input
+            type="text"
+            className={`form-control ${
+              emptyFields.includes("imageLink") ? "error" : ""
+            }`}
+            value={imageLink}
+            onChange={(e) => setImageLink(e.target.value)}
+          />
+        </div>
+
+        {/* Error */}
         {error && <div className="alert alert-danger">{error}</div>}
 
         <button type="submit" className="btn btn-primary">

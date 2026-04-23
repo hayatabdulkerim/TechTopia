@@ -21,6 +21,11 @@ const productSchema = new Schema(
       required: true,
       min: 0, // preventing negative prices
     },
+    stock: {
+      type: Number,
+      required: true,
+      min: 0, // preventing negative prices
+    },
     imageLink: {
       type: String,
       required: true,
