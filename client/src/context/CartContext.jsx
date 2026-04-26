@@ -101,11 +101,9 @@ export const CartContextProvider = ({ children }) => {
     cartItems: [],
   });
 
-
   // FETCH CART FROM BACKEND
 
   const fetchCart = async () => {
-    
     if (!user) return;
 
     try {
@@ -125,9 +123,8 @@ export const CartContextProvider = ({ children }) => {
     }
   };
 
- 
   // LOAD CART ON LOGIN / USER CHANGE
-  
+
   useEffect(() => {
     if (user) {
       fetchCart();

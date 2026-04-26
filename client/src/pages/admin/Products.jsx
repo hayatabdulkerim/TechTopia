@@ -1,7 +1,31 @@
 import { useProductsContext } from "../../hooks/useProductsContext";
-
+import {useCartContext} from "../../hooks/useCartContext"
+import {useAuthContext} from "../../hooks/useAuthContext"
 const Products = () => {
-  const { products } = useProductsContext();
+  const { products, dispatch } = useProductsContext();
+  const {dispatch: cartDispatch, fetchCart} = useCartContext();
+  const {user} = useAuthContext();
+
+  const handleDelete = async (product) => {
+     if (!user) {
+       // only logged in users can delete products
+       return;
+     }
+     const response = await fetch(
+       "http://localhost:4000/api/Products/" + product._id,
+       {
+         method: "DELETE",
+         headers: {
+           Authorization: `Bearer ${user.token}`, // sending autorization token along the get request to be able to access the workouts
+         },
+       },
+     );
+     const json = await response.json();
+     if (response.ok) {
+       dispatch({ type: "DELETE_PRODUCT", payload: json });
+      await fetchCart() // to sync cart items with the backend (remove the deleted product from users cart too)
+     }
+  }
 
   return (
     <div className="container mt-4">
@@ -66,7 +90,7 @@ const Products = () => {
                         <button className="btn btn-sm btn-primary me-2">
                           Edit
                         </button>
-                        <button className="btn btn-sm btn-danger">
+                        <button className="btn btn-sm btn-danger" onClick={() => handleDelete(product)}>
                           Delete
                         </button>
                       </td>
