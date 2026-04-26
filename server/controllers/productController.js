@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Product = require("../models/productModel");
+const Cart = require("../models/cartModel")
 
 // get all products
 
@@ -84,6 +85,7 @@ const deleteProduct = async (req, res) => {
   }
 
   const product = await Product.findByIdAndDelete(id);
+  await Cart.deleteMany({ productId: product._id });
 
   if (!product) {
     return res.status(404).json({ error: "No such product" });
