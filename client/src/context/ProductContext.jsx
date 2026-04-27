@@ -19,6 +19,13 @@ export const productsReducer = (state, action) => {
         ...state,
         products: state.products.filter((p) => p._id !== action.payload._id),
       };
+    case "UPDATE_PRODUCT":
+      return {
+        ...state,
+        products: state.products.map((p) =>
+          p._id === action.payload._id ? action.payload : p,
+        ),
+      };
 
     default:
       return state;
@@ -27,12 +34,11 @@ export const productsReducer = (state, action) => {
 
 export const ProductsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(productsReducer, {
-    products: null,
+    products: [],
   });
 
-  // i added this for fetching to be globaly avaliavle so that the dashboard is not dependent on the fetch that happens inside category page 
+  // i added this for fetching to be globaly avaliavle so that the dashboard is not dependent on the fetch that happens inside category page
   useEffect(() => {
-
     const loadProducts = async () => {
       try {
         const data = await fetchAllProducts();
