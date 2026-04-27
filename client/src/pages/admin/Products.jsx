@@ -1,31 +1,34 @@
 import { useProductsContext } from "../../hooks/useProductsContext";
-import {useCartContext} from "../../hooks/useCartContext"
-import {useAuthContext} from "../../hooks/useAuthContext"
+import { useCartContext } from "../../hooks/useCartContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
+
 const Products = () => {
+  const navigate = useNavigate();
   const { products, dispatch } = useProductsContext();
-  const {dispatch: cartDispatch, fetchCart} = useCartContext();
-  const {user} = useAuthContext();
+  const { dispatch: cartDispatch, fetchCart } = useCartContext();
+  const { user } = useAuthContext();
 
   const handleDelete = async (product) => {
-     if (!user) {
-       // only logged in users can delete products
-       return;
-     }
-     const response = await fetch(
-       "http://localhost:4000/api/Products/" + product._id,
-       {
-         method: "DELETE",
-         headers: {
-           Authorization: `Bearer ${user.token}`, // sending autorization token along the get request to be able to access the workouts
-         },
-       },
-     );
-     const json = await response.json();
-     if (response.ok) {
-       dispatch({ type: "DELETE_PRODUCT", payload: json });
-      await fetchCart() // to sync cart items with the backend (remove the deleted product from users cart too)
-     }
-  }
+    if (!user) {
+      // only logged in users can delete products
+      return;
+    }
+    const response = await fetch(
+      "http://localhost:4000/api/Products/" + product._id,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`, // sending autorization token along the get request to be able to access the workouts
+        },
+      },
+    );
+    const json = await response.json();
+    if (response.ok) {
+      dispatch({ type: "DELETE_PRODUCT", payload: json });
+      await fetchCart(); // to sync cart items with the backend (remove the deleted product from users cart too)
+    }
+  };
 
   return (
     <div className="container mt-4">
@@ -55,7 +58,7 @@ const Products = () => {
                       <td>
                         <div className="d-flex align-items-center">
                           <img
-                            src={product.image}
+                            src={product.imageLink}
                             // alt={product.name}
                             className="rounded me-2"
                             style={{
@@ -87,10 +90,18 @@ const Products = () => {
 
                       {/* Actions */}
                       <td className="text-center">
-                        <button className="btn btn-sm btn-primary me-2">
+                        <button
+                          className="btn btn-sm btn-primary me-2"
+                          onClick={() =>
+                            navigate(`/products/edit/${product._id}`)
+                          }
+                        >
                           Edit
                         </button>
-                        <button className="btn btn-sm btn-danger" onClick={() => handleDelete(product)}>
+                        <button
+                          className="btn btn-sm btn-danger"
+                          onClick={() => handleDelete(product)}
+                        >
                           Delete
                         </button>
                       </td>

@@ -1,7 +1,12 @@
-import { useState } from "react";
-import { useProductsContext } from "../hooks/useProductsContext";
 
-export default function ProductForm() {
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useProductsContext } from "../../hooks/useProductsContext";
+
+
+export default function ProductEdit() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const { dispatch } = useProductsContext();
 
   const [name, setName] = useState("");
@@ -13,11 +18,46 @@ export default function ProductForm() {
 
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(true);
 
+  // Fetch product by ID
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`http://localhost:4000/api/products/${id}`);
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          setError(data.error);
+          setFetchLoading(false);
+          return;
+        }
+
+        setName(data.name);
+        setCategory(data.category);
+        setDescription(data.description);
+        setPrice(data.price);
+        setStock(data.stock);
+        setImageLink(data.imageLink);
+
+        setFetchLoading(false);
+      } catch (err) {
+        setError("Failed to load product");
+        setFetchLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  //  Submit update
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const product = {
+    const updatedProduct = {
       name,
       category,
       description,
@@ -26,39 +66,39 @@ export default function ProductForm() {
       imageLink,
     };
 
-    const response = await fetch("http://localhost:4000/api/products", {
-      method: "POST",
-      body: JSON.stringify(product),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const res = await fetch(`http://localhost:4000/api/products/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedProduct),
+      });
 
-    const json = await response.json();
+      const json = await res.json();
 
-    if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyFields || []);
-    } else {
-      setError(null);
-      setEmptyFields([]);
-
-      setName("");
-      setCategory("");
-      setDescription("");
-      setPrice("");
-      setStock("");
-      setImageLink("");
-
-      
-
-      dispatch({ type: "CREATE_PRODUCT", payload: json });
+      if (!res.ok) {
+        setError(json.error);
+        setEmptyFields(json.emptyFields || []);
+      } else {
+        dispatch({ type: "UPDATE_PRODUCT", payload: json });
+        navigate("/products");
+      }
+    } catch (err) {
+      setError("Something went wrong");
     }
+
+    setLoading(false);
   };
+
+  //  Loading state
+  if (fetchLoading) {
+    return <div className="container topmar">Loading product...</div>;
+  }
 
   return (
     <div className="container topmar">
-      <h1 className="mb-4">Add a Product</h1>
+      <h1 className="mb-4">Edit Product</h1>
 
       <form
         onSubmit={handleSubmit}
@@ -88,7 +128,7 @@ export default function ProductForm() {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">Select a category</option>
-            <option value="headphones">Headphones</option>
+            <option value="headsets">Headsets</option>
             <option value="earbuds">Earbuds</option>
             <option value="smart-glasses">Smart Glasses</option>
             <option value="accessories">Accessories</option>
@@ -116,7 +156,9 @@ export default function ProductForm() {
               emptyFields.includes("price") ? "error" : ""
             }`}
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) =>
+              setPrice(e.target.value === "" ? "" : Number(e.target.value))
+            }
           />
         </div>
 
@@ -129,7 +171,9 @@ export default function ProductForm() {
               emptyFields.includes("stock") ? "error" : ""
             }`}
             value={stock}
-            onChange={(e) => setStock(e.target.value)}
+            onChange={(e) =>
+              setStock(e.target.value === "" ? "" : Number(e.target.value))
+            }
           />
         </div>
 
@@ -149,8 +193,8 @@ export default function ProductForm() {
         {/* Error */}
         {error && <div className="alert alert-danger">{error}</div>}
 
-        <button type="submit" className="btn btn-primary">
-          Add Product
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? "Saving..." : "Save changes"}
         </button>
       </form>
     </div>

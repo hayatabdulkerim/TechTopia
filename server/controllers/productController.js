@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Product = require("../models/productModel");
-const Cart = require("../models/cartModel")
+const Cart = require("../models/cartModel");
 
 // get all products
 
@@ -73,9 +73,7 @@ const createProduct = async (req, res) => {
   }
 };
 
-
-// delete product 
-
+// delete product
 
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
@@ -93,25 +91,25 @@ const deleteProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
-
-// update a product
+// update a product 
 const updateProduct = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid id" });
   }
-  const product = await Product.findOneAndUpdate({ _id: id }, {
-    ...req.body  // destructure it into the new onject
-  });            // takes two parameters the id and the updates we wanna make 
-  
+
+  const product = await Product.findOneAndUpdate(
+    { _id: id },
+    { ...req.body },
+    { new: true }, // This ensures the updated document is returned
+  );
+
   if (!product) {
     return res.status(404).json({ error: "No such product " });
   }
   res.status(200).json(product);
 };
-
-
 
 module.exports = {
   createProduct,
